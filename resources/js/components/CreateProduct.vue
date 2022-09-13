@@ -4,19 +4,18 @@
             <div class="col-md-6">
                 <div class="card shadow mb-4">
                     <div v-if="message == true" class="card-body">
-                        
+                        <h2>hi</h2>
                     </div>
                 </div>
 
                 <div class="card shadow mb-4">
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="">Product Name</label>
+                            <label for="">Product Names <span class="text-danger">*</span></label>
                             <input type="text" v-model="product_name" placeholder="Product Name" class="form-control">
-                            <span v-if="errors.title[0]" class="text-danger">{{errors}}</span>
                         </div>
                         <div class="form-group">
-                            <label for="">Product SKU</label>
+                            <label for="">Product SKU <span class="text-danger">*</span></label>
                             <input type="text" v-model="product_sku" placeholder="Product Name" class="form-control">
                         </div>
                         <div class="form-group">
@@ -45,7 +44,7 @@
                         <div class="row" v-for="(item,index) in product_variant">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="">Option</label>
+                                    <label for="">Option <span class="text-danger">*</span></label>
                                     <select v-model="item.option" class="form-control">
                                         <option v-for="variant in variants"
                                                 :value="variant.id">
@@ -199,15 +198,30 @@ export default {
 
 
             axios.post('/product', product).then(response => {
-                this.message = true
-                console.log(response.status)
-                    this.$swal('Product successfully added!');
+                if(response.status == 200) {
+                    this.errors  = []
+                    console.log(response)
+                    console.log(response.data)
+                    this.$swal({
+                        icon: 'success',
+                        title: 'Well Done !',
+                        text: 'Product Added Successfully',
+                    });
+                } else if(response.status == 400) {
+                    this.errors  = response.data.errors
+                    this.$swal({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Please fill the required fields',
+                });
+                }
             }).catch(error => {
-                console.log("here")
-                
+                this.$swal({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                });
             })
-
-            console.log(product);
         }
 
 

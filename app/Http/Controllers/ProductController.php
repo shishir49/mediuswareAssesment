@@ -80,7 +80,7 @@ class ProductController extends Controller
     {
        $validation = Validator::make($request->all(), [
           'title'            => 'required',
-          'sku'              => 'required'
+          'sku'              => 'required|unique:products'
        ]);
 
        if($validation->fails()) {
@@ -131,9 +131,9 @@ class ProductController extends Controller
                   'product_id'              => $createProduct->id
               ]);
             }
-
-            return response()->json(200);
          });
+
+         return response()->json(200);
        }
     }
 
@@ -182,10 +182,13 @@ class ProductController extends Controller
             $thumbnailPath = '';
               
             foreach($request->product_variant as $key => $variant) {
-                $input['variant']       = $request->product_variant[$key]['tags'][0];
-                $input['variant_id']    = $request->product_variant[$key]['option'];
-                $input['product_id']    = $createProduct->id;
-                ProductVariant::updateOrCreate(['variant' => $request->product_variant[$key]['tags'][0],'product_id' => $createProduct->id], $input);
+                foreach($request->product_variant[$key]['tags'] as $subkey => $variants) {
+                   $input['variant']       = $request->product_variant[$key]['tags'][$subkey];
+                   $input['variant_id']    = $request->product_variant[$key]['option'];
+                   $input['product_id']    = $createProduct->id;
+                   ProductVariant::updateOrCreate(['variant' => $request->product_variant[$key]['tags'][$subkey],'product_id' => $createProduct->id], $input);
+                } 
+                
             }
   
             foreach($request->product_variant_prices as $key => $variantPrice) {

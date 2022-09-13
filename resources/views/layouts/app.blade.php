@@ -16,6 +16,12 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/css/bootstrap.css" rel="stylesheet"> -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+
 </head>
 {{--<body id="page-top">--}}
 
@@ -155,6 +161,7 @@
 </div>
 
 <!-- Scripts -->
+<script src="{{ asset('js/products.js') }}"></script>
 <script src="{{ asset('js/app.js') }}" defer></script>
 </body>
 </html>

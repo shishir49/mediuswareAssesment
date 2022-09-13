@@ -19,7 +19,7 @@
                             <option selected disabled>Select an Option</option>
                             <optgroup label="{{ $variants->title }}">
                             @foreach($variants->productVariants as $variantList)
-                                <option value="{{ $variantList->variant }}">{{ $variantList->variant }}</option>
+                                <option value="{{ $variantList->variant_id }}">{{ $variantList->variant }}</option>
                             @endforeach
                            </optgroup>
                        @endforeach
@@ -91,7 +91,7 @@
                         </td>
                         <td>
                             <div class="btn-group btn-group-sm">
-                                <a href="{{ route('product.edit', $products->id) }}" class="btn btn-success">Edit</a>
+                                <a href="{{ route('product.edit', 1) }}" class="btn btn-success">Edit</a>
                             </div>
                         </td>
                     </tr>

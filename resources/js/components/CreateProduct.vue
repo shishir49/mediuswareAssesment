@@ -3,10 +3,17 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="card shadow mb-4">
+                    <div v-if="message == true" class="card-body">
+                        
+                    </div>
+                </div>
+
+                <div class="card shadow mb-4">
                     <div class="card-body">
                         <div class="form-group">
                             <label for="">Product Name</label>
                             <input type="text" v-model="product_name" placeholder="Product Name" class="form-control">
+                            <span v-if="errors.title[0]" class="text-danger">{{errors}}</span>
                         </div>
                         <div class="form-group">
                             <label for="">Product SKU</label>
@@ -118,6 +125,8 @@ export default {
             product_sku: '',
             description: '',
             images: [],
+            errors: [],
+            message: false,
             product_variant: [
                 {
                     option: this.variants[0].id,
@@ -190,9 +199,12 @@ export default {
 
 
             axios.post('/product', product).then(response => {
-                console.log(response.data);
+                this.message = true
+                console.log(response.status)
+                    this.$swal('Product successfully added!');
             }).catch(error => {
-                console.log(error);
+                console.log("here")
+                
             })
 
             console.log(product);
